@@ -26,6 +26,11 @@ def upload():
         file.save(os.path.join(filename) + str(fid).zfill(4) + ".wav")
     return "1"
 
+@app.route('/<path:dummy>')
+def fallback(dummy):
+    return "fuck off"
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5001", debug=False)
     # run the above for local testing, and the below for production environment
