@@ -9,9 +9,12 @@ app = Flask(__name__)
 # fix the encode of Chinese letters in json format
 # app.config['JSON_AS_ASCII'] = False
 
-@app.route("/")
+@app.route("/", methods = ['GET', 'POST'])
 def hello():
-    return "Hello World!"
+    if request.method == 'POST':
+      return "Fuck off!"
+    else:
+      return "Hello World!"
 
 @app.route("/upload", methods = ['POST'])
 def upload():
@@ -26,10 +29,9 @@ def upload():
         file.save(os.path.join(filename) + str(fid).zfill(4) + ".wav")
     return "1"
 
-@app.route('/<path:dummy>')
+@app.route('/<path:dummy>', methods = ['POST', 'GET'])
 def fallback(dummy):
-    return "fuck off"
-
+    return "Fuck off!"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5001", debug=False)
