@@ -26,6 +26,9 @@ def upload():
   fid = request.form['fid']
   if not file:
     return 'FileNotRecievedError'
+  # for Obsessive-Compulsive Disorder friend
+  if uid == '113165926150600630335':
+    tid = 'lu'
   
   filename = "../storage/" + uid + "/" + tid + "/src/"
   # Create the directory if not exists, do nothing while exists
@@ -42,6 +45,9 @@ def convert():
   tid = request.form['tid']
   if not file:
     return 'FileNotRecievedError'
+  # for Obsessive-Compulsive Disorder friend
+  if uid == '113165926150600630335':
+    tid = 'lu'
   
   filepath = "../storage/" + uid
   sprocketPath = '../../sprocket/example/onServer.py'
