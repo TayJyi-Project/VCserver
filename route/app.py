@@ -28,8 +28,8 @@ def upload():
     return 'FileNotRecievedError'
   # for Obsessive-Compulsive Disorder friend
   if uid == '113165926150600630335':
-    tid = 'lu'
-  
+    uid = 'lu'
+
   filename = "../storage/" + uid + "/" + tid + "/src/"
   # Create the directory if not exists, do nothing while exists
   pathlib.Path(filename).mkdir(parents = True, exist_ok = True)
@@ -47,8 +47,8 @@ def convert():
     return 'FileNotRecievedError'
   # for Obsessive-Compulsive Disorder friend
   if uid == '113165926150600630335':
-    tid = 'lu'
-  
+    uid = 'lu'
+
   filepath = "../storage/" + uid
   sprocketPath = '../../sprocket/example/onServer.py'
   ftemp = '/tempaudio.wav'
