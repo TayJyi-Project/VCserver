@@ -82,7 +82,7 @@ def splitBySubtitles(tempname, filename, sampleRate, audioFormat):
 if __name__ == "__main__":
 
     tempname, filename, sampleRate, audioFormat = audioDownload('https://www.youtube.com/watch?v=N0zhdMwD2Z8')
-    if(os.path.exists(filename.replace('.mp3', '.zh-TW.vtt'))):
+    if(os.path.exists(filename.replace('.{0}'.format(audioFormat), '.zh-TW.vtt'))):
         splitBySubtitles(tempname = tempname, filename = filename, sampleRate = sampleRate, audioFormat = audioFormat)
     else:
         pass
