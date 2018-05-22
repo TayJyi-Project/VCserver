@@ -61,8 +61,8 @@ def splitBySubtitles(tempname, filename, sampleRate, audioFormat):
             timepts = [float(tp) for tp in matches]
             # pydub uses ms as calculate units...
             tstart = (timepts[0] * 3600 + timepts[1] * 60 + timepts[2] * 1) * 1000
-            tend = (timepts[3] * 3600 + timepts[4] * 60 + timepts[5] * 1) * 1000
-
+            tend = (timepts[3] * 3600 + timepts[4] * 60 + timepts[5] * 1) * 1000    
+              
             chunktimes.append(audiosignals[tstart:tend])
             lazytag = True
         elif not re.search(regexp1, line) and lazytag is True:
