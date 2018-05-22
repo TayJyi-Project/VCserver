@@ -70,8 +70,8 @@ def splitBySubtitles(tempname, filename, sampleRate, audioFormat):
             chunkwords.append(line)
         else:
             continue
- 
-    assert len(chunktimes) is len(chunkwords)
+  
+    assert len(chunktimes) == len(chunkwords)
     for idx in range(len(chunktimes)):
         chunktimes[idx].export('{0}{1}.{2}'.format(chunkdir, str(idx).zfill(4), audioFormat), format = audioFormat)
     for idx in range(len(chunkwords)):
@@ -81,7 +81,7 @@ def splitBySubtitles(tempname, filename, sampleRate, audioFormat):
 
 if __name__ == "__main__":
 
-    tempname, filename, sampleRate, audioFormat = audioDownload('https://www.youtube.com/watch?v=sQ-9mhqOHoA')
+    tempname, filename, sampleRate, audioFormat = audioDownload('https://www.youtube.com/watch?v=N0zhdMwD2Z8')
     if(os.path.exists(filename.replace('.mp3', '.zh-TW.vtt'))):
         splitBySubtitles(tempname = tempname, filename = filename, sampleRate = sampleRate, audioFormat = audioFormat)
     else:
