@@ -1,0 +1,15 @@
+jnt:
+    n_iter: 3
+GMM:
+    mcep:
+        n_mix: 32
+        n_iter: 100
+        covtype: full
+        cvtype: mlpg
+    codeap:
+        n_mix: 16
+        n_iter: 100
+        covtype: full
+        cvtype: mlpg
+GV:
+    morph_coeff: 1.0
