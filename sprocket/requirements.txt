@@ -1,0 +1,12 @@
+numpy
+scipy
+pysptk>=0.1.7
+scikit-learn
+scikit-image
+pyworld
+h5py
+dtw
+fastdtw
+nose
+pyyaml
+docopt
