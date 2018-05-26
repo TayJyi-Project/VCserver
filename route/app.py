@@ -27,13 +27,17 @@ def upload():
   if not file:
     return 'FileNotRecievedError'
   # for Obsessive-Compulsive Disorder friend
-  if uid == '113165926150600630335':
-    uid = 'lu'
+  # if uid == '113165926150600630335':
+    # uid = 'lu'
 
   filename = "../storage/" + uid + "/" + tid + "/src/"
   # Create the directory if not exists, do nothing while exists
   pathlib.Path(filename).mkdir(parents = True, exist_ok = True)
-  file.save(os.path.join(filename) + str(fid).zfill(4) + ".wav")
+  filepath = os.path.join(filename)
+  ftemp = 'temp.wav'
+  fsave = str(fid).zfill(4) + '.wav'
+  file.save(filepath + ftemp)
+  subprocess.call(['ffmpeg', '-y', '-i', filepath + ftemp, filepath + fsave])
   return 'SuccessUploadFile'
 
 
@@ -46,11 +50,12 @@ def convert():
   if not file:
     return 'FileNotRecievedError'
   # for Obsessive-Compulsive Disorder friend
-  if uid == '113165926150600630335':
-    uid = 'lu'
+  # if uid == '113165926150600630335':
+    # uid = 'lu'
 
   filepath = "../storage/" + uid
-  sprocketPath = '../../sprocket/example/onServer.py'
+  # sprocketPath = '../../sprocket/example/onServer.py'
+  sprocketPath = '../sprocket/example/onServer.py'
   ftemp = '/tempaudio.wav'
   fconvert = '/tobeconvert.wav'
   freturn = '/afterconvert.wav'
@@ -81,6 +86,6 @@ def fallback(dummy):
 
 if __name__ == "__main__":
   # for production environment
-  app.run(host="0.0.0.0", port="5001", debug=False)
+  app.run(host="0.0.0.0", port="5001", debug=True)
   # for local testing
   # app.run(port=5001, debug=True)
