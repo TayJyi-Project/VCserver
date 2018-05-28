@@ -86,6 +86,6 @@ def fallback(dummy):
 
 if __name__ == "__main__":
   # for production environment
-  app.run(host="0.0.0.0", port="5001", debug=True)
+  app.run(host="0.0.0.0", port="5001", debug=False)
   # for local testing
   # app.run(port=5001, debug=True)
