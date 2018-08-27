@@ -1,8 +1,11 @@
 import os
+import math
+import struct
 import string
 import pathlib
 import youtube_dl
 import subprocess
+from pydub import AudioSegment
 from flask import Flask, request, make_response, send_file, send_from_directory
 from flask_cors import CORS, cross_origin
 
@@ -74,10 +77,95 @@ def download():
   filename = request.args.get("filename")
   # return byte data ?
   # response = make_response(file.read())
-  response = make_response(send_file(filename))
-  response.headers['Content-Type'] = 'audio/wav'
+  response = make_response(send_file(filename, 'audio/wav'))
+  # response.headers['Content-Type'] = 'audio/wav'
   # response.headers['Content-Disposition'] = "attachment"
   return response
+
+
+
+
+@app.route("/m4dl", methods = ['GET'])
+def testM4Download():
+
+  retSize = 1024# return bytes
+  if request.args.get("pid"):
+    pageid = int(request.args.get("pid"))
+  else:
+    pageid = -1
+  fpath = '../storage/cortex-m4/afterconvert.wav'
+  if pageid == -1:
+
+    with open(fpath, 'rb') as fp:
+      temp = fp.read()
+    print('pid is {}'.format(pageid))
+    return 'loopCount:' + str(math.ceil(len(temp) / retSize))
+
+  with open(fpath, 'rb') as fp:
+    fp.seek(int(pageid) * retSize, 1)
+    ret = fp.read(retSize)
+
+  #print(type(ret))
+  print(len(ret))
+  print(ret)
+
+  return bytes('byteData:', encoding="utf8") + (ret)
+
+'''
+@app.route("/m4ul", methods = ['POST'])
+def testM4Post():
+
+  if request.form:
+    if request.form['msg']:
+      msg = request.form['msg']
+    else:
+      msg = "your post is fucking empty no msg"
+  else:
+    msg = "your post is fucking empty"
+  print(msg)
+  return msg
+  # pass
+  # make sure post is workable first
+'''
+
+
+@app.route("/m4ul", methods = ['POST'])
+def testM4Upload():
+
+  batch_size = 1500 - 1 # according to m4
+  tempPath = '../storage/cortex-m4/tempConvert.wav'
+  realPath = '../storage/cortex-m4/tobeconvert.wav'
+  convPath = '../storage/cortex-m4/afterconvert.wav'
+  sprocketPath = '../sprocket/example/onServer.py'
+  '''
+  pid = int(request.form['pid']) if request.form.get('pid') else 0
+
+  fpath = '../storage/cortex-m4/tobeconvert.wav'
+  if pid == -1:
+    with open(fpath, 'wb') as fp:
+      pass
+    return 'remove!'
+  # json doesn't accept byte data
+  '''
+
+  bytedata = request.get_data()
+  if bytedata == b'':
+    return 'empty!'
+
+
+  with open(tempPath, 'ab+') as fp:
+    fp.write(bytedata)
+
+  if len(bytedata) != batch_size:
+    os.rename(tempPath, realPath)
+
+    AudioSegment.from_wav(realPath).set_channels(1).export(realPath, format='wav', parameters = ['-y'])
+    cmd = ['python3', sprocketPath, "cortex-m4", "kp3-16k"]
+    subprocess.Popen(cmd).wait()
+    AudioSegment.from_wav(convPath).set_channels(2).export(convPath, format='wav', parameters = ['-y'])
+
+  return 'success'
+
 
 
 @app.route('/<path:dummy>', methods = ['POST', 'GET'])
